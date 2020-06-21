@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wagyu Steak</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lato&family=Slabo+13px&display=swap" rel="stylesheet"> 
+    <style>
+        .content {
+            margin: 1rem 2rem;
+        }
+        h1 {
+            font-family: "Lato", sans-serif;
+        }
+        #app {
+            font-family: "Slabo 13px", serif;
+        }
+        button {
+            cursor: pointer;
+        }
+        .slide-fade-enter-active {
+        transition: all .3s ease;
+        }
+        .slide-fade-leave-active {
+        transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+        }
+        .slide-fade-enter, .slide-fade-leave-to
+        /* .slide-fade-leave-active below version 2.1.8 */ {
+        transform: translateX(10px);
+        opacity: 0;
+        }
+        .image-card {
+            height: 256px;
+            display: flex;
+            align-items: center;
+        }
+        .image-card,
+        .image-card img {            
+            max-width: 256px;
+            max-height: 256px;
+        }
+        .controls {
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <div id="app">
+            <h1>Wagyu Steak</h1>
+            <div class="poem-card">
+                <div class="image-card">
+                    <transition name="slide-fade" mode="out-in">
+                        <img :src="getPage()['image']" :key="getPage()['image']">
+                    </transition>
+                </div>
+                <p class="list-complete-item" :key="p" v-for="p in getPage()['paragraphs']">{{p}}</p>
+            </div>
+            <div class="controls">
+                <!-- <small>{{currentPage + 1}} of {{poem.length}}</small> -->
+                <div>
+                    <button :disabled="currentPage == 0" @click="previousPage">&larr;</button>
+                    <button :disabled="currentPage == poem.length - 1" @click="nextPage">&rarr;</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.js"></script>
+    <script>
+        const POEM = [
+{text:`i.
+I wish I could buy you 
+some Wagyu steak
+So you could kick back 
+and take a break`, image: "img/steak.jpg"},
+{text:`ii.
+Who cares if you 
+get fat for a day
+since you exercise
+a lot anyway`, image: "img/exercise.jpg"},
+{text:`iii.
+As a kid I watched
+as you would jog
+all the rounds 
+you made sure to log`, image: "img/jog.jpg"},
+{text:`iv.
+Go twenty times
+you would say
+or no computer
+you shall have this day`, image: "img/computer.jpg"},
+{text:`v.
+Being a father is tough
+there is no doubt
+sometimes it makes you
+scream and shout`, image: "img/shout.jpg"},
+{text:`vi.
+You never know how
+kids turn out
+Will I be a gentleman
+or simply a lout`, image: "img/jekyll.jpg"},
+{text:`vii.
+What goes on in 
+our little heads
+from our diapers
+until we are wed`, image: "img/evolution.jpg"},
+{text:`viii.
+Do I ever get through
+you must think
+Do they ever really
+make the link`, image: "img/jackie.jpg"},
+{text: `ix.
+As a father sometimes 
+you'll never know
+Because sometimes 
+we learn real slow`, image: "img/waiting.jpg"},
+{text:`x.
+Sometimes we pick up
+what is not taught
+Lessons you give
+that were not sought`, image: "img/watching.jpg"},
+{text: `xi.
+Growing up it is
+monkey see monkey do
+And that's how we 
+figure out what's true`, image: "img/monkey.jpg"},
+{text:`xii.
+But what monkeys dont see
+Is important too
+Read between the lines
+That we can do`, image: "img/monkeyread.jpg"},
+{text:`xiii.
+Thank you for all this
+We learned a lot
+A stable family
+cannot be bought`, image: "img/family.jpg"},
+{text: `xiv.
+Happy Father's Day
+I would like to say
+Keep your health up so
+On this earth you stay!`, image: "img/fathers.jpg"}]
+        const app = new Vue({
+            el: "#app",
+            data: {
+                currentPage: 0,
+                poem: POEM,
+            },
+            mounted() {
+                window.addEventListener('keyup', e => {
+                    if (e.key === "ArrowRight") {
+                        this.nextPage()
+                    } else if (e.key === "ArrowLeft") {
+                        this.previousPage()
+                    }        
+                })
+            },
+            methods: {
+                nextPage() {
+                    this.currentPage += this.currentPage < POEM.length - 1 ? 1 : 0
+                },
+                previousPage() {
+                    this.currentPage -= this.currentPage > 0 ? 1 : 0
+                },
+                getPage() {
+                    return {paragraphs: POEM[this.currentPage].text.split("\n"), image: POEM[this.currentPage].image}
+                }
+            }
+        })
+    </script>
+</body>
+</html>
