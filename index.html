@@ -58,7 +58,6 @@
                 <p class="list-complete-item" :key="p" v-for="p in getPage()['paragraphs']">{{p}}</p>
             </div>
             <div class="controls">
-                <!-- <small>{{currentPage + 1}} of {{poem.length}}</small> -->
                 <div>
                     <button :disabled="currentPage == 0" @click="previousPage">&larr;</button>
                     <button :disabled="currentPage == poem.length - 1" @click="nextPage">&rarr;</button>
@@ -66,7 +65,7 @@
             </div>
         </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js"></script>
     <script>
         const POEM = [
 {text:`i.
