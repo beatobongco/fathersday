@@ -40,6 +40,9 @@
             max-width: 256px;
             max-height: 256px;
         }
+        .image-card img {
+            pointer-events: none;
+        }
         .controls {
             margin-top: 1rem;
         }
@@ -66,6 +69,7 @@
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>  
     <script>
         const POEM = [
 {text:`i.
@@ -163,6 +167,18 @@ on this earth you stay!`, image: "img/fathers.jpg"}]
                 getPage() {
                     return {paragraphs: POEM[this.currentPage].text.split("\n"), image: POEM[this.currentPage].image}
                 }
+            }
+        })
+        //swipe support
+        const appElem = document.querySelector("#app")
+        const manager = new Hammer.Manager(appElem)
+        const Swipe = new Hammer.Swipe()
+        manager.add(Swipe)
+        manager.on("swipe", e => {
+            if (e.offsetDirection === 2) {
+                app.nextPage()
+            } else if (e.offsetDirection === 4) {
+                app.previousPage()
             }
         })
     </script>
